@@ -29,6 +29,7 @@ public class U300EchoServerGood {
         try(ServerSocket servidor = new ServerSocket(puerto);) {
             System.out.println("Servidor activo, esperando conexiones por el puerto: " + puerto);
             Socket socket = servidor.accept();
+            System.out.println("CLiente conectado " + socket.getInetAddress() + ":" + socket.getPort());
             BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter pw = new PrintWriter(socket.getOutputStream(), true);
 
@@ -37,7 +38,6 @@ public class U300EchoServerGood {
                 System.out.println("Recibido del cliente: " + line);
                 pw.println(line.toLowerCase());
             }
-
         } catch (IOException e) {
             System.err.println("Error en el servidor: " + e.getMessage());
         }
