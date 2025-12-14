@@ -1,0 +1,55 @@
+Ejercicio Práctico: Servidor de Subastas/Pujas (Multihilo)
+Objetivo: Crear una aplicación Cliente-Servidor usando Sockets TCP en Java que permita gestionar las pujas activas de una casa de subastas.
+
+1. Requisitos del Servidor (ServidorSubastas)
+Conexión: El servidor debe escuchar en el puerto 5555.
+
+Concurrencia: Debe ser capaz de atender a múltiples clientes a la vez (Multihilo).
+
+Datos: Debe mantener un registro centralizado de los artículos y su puja máxima actual.
+
+Estructura recomendada: Un Map que asocie el Nombre del Artículo (String) con el Valor de la Puja (Integer o Double).
+
+Importante: Dado que varios clientes pueden intentar pujar por el mismo artículo a la vez, el mapa debe ser seguro para hilos (synchronized).
+
+Datos iniciales: Carga el mapa con al menos 3 artículos predefinidos (ej: "Jarrón", 100; "Cuadro", 500; "Reloj", 250).
+
+2. Protocolo de Comunicación (Comandos)
+El servidor debe procesar las siguientes peticiones de los clientes:
+
+VER <nombre_articulo>
+
+El servidor busca el artículo.
+
+Si existe, devuelve: "La puja actual por [articulo] es: [valor]".
+
+Si no existe, devuelve: "El artículo no existe".
+
+PUJAR <nombre_articulo> <cantidad>
+
+El servidor comprueba si el artículo existe.
+
+Lógica de negocio:
+
+Si el artículo no existe: "Error: Artículo no encontrado".
+
+Si la cantidad es mayor que la puja actual: actualiza el valor en el mapa y devuelve "Puja aceptada. Nueva puja máxima: [cantidad]".
+
+Si la cantidad es menor o igual: devuelve "Puja rechazada. La puja actual es mayor o igual".
+
+Nota: Ten cuidado al convertir el String de la cantidad a número (Integer.parseInt). Controla la posible excepción.
+
+LISTAR
+
+Devuelve una cadena con todos los artículos y sus precios actuales (similar al comando lis del diccionario).
+
+SALIR
+
+Cierra la conexión con ese cliente y despide.
+
+3. Requisitos del Cliente (ClienteSubastas)
+Debe conectarse a localhost en el puerto 5555.
+
+Debe presentar un menú al usuario o permitir escribir comandos por consola repetidamente hasta que escriba SALIR.
+
+Debe mostrar la respuesta que le envía el servidor.

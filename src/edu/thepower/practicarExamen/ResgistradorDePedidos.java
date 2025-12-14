@@ -1,4 +1,4 @@
-package edu.thepower.PracticarExamen;
+package edu.thepower.practicarExamen;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
