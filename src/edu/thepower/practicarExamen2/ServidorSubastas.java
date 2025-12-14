@@ -85,13 +85,10 @@ public class ServidorSubastas {
                     case "ver" -> verInformacionArticulo(comandoPujadorTrozeado[1]);
                     case "pujar" -> pujarSobreArticulo(comandoPujadorTrozeado[1], comandoPujadorTrozeado[2]);
                     case "listar" -> listarArticulosSubasta();
-                    /*
-                    case "salir" -> {
-
-                    }
-                    */
+                    case "salir" -> "Hasta la vista!";
                     default -> "Comando introudcido desconocido, introduce otro comando";
                 };
+                printWriter.println(respuesta);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -106,6 +103,11 @@ public class ServidorSubastas {
         // Creación del 'socket' del servidor
         try(ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("Servidor escuchando por el puerto: " + PORT + "...");
+            while(true) {
+                Socket socket = serverSocket.accept();
+                Thread thread = new Thread(() -> gestionarPujador(socket));
+                thread.start();
+            }
         } catch (IOException e) {
             System.err.println("Error en el servidor: " + e.getMessage());
         }
