@@ -15,13 +15,13 @@ public class U305ClientDiccionario {
         try (Socket socket = new Socket(HOST, PORT);
              BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              PrintWriter pw = new PrintWriter(socket.getOutputStream(), true)) {
-            System.out.println("Conexión establecida con el servidor.");
+            System.out.println("Conexión establecida con el servidor");
             Scanner sc = new Scanner(System.in);
             String comando;
             do {
                 System.out.print("Introduzca un comando (trd / inc / lis / sal ó bye):");
                 System.out.print("\n Formato comando trd: trd <palabra>");
-                System.out.print("\n Formato comando inc: inc <palabra> <traduccion>");
+                System.out.print("\n Formato comando inc: inc <palabra> <traducción>");
                 System.out.print("\n >");
                 comando = sc.nextLine();
                 pw.println(comando);

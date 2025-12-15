@@ -18,7 +18,7 @@ public class ServidorSubastas {
 
     // Añadir unos cuántos artículos al mapa para poder trabajar con él
     static {
-        String[] nombreArticulos = {"Samsung TV", "Google Pixel", "iPad"};
+        String[] nombreArticulos = {"SamsungTV", "GooglePixel", "iPad"};
         Integer[] precioArticulos = {1200, 600, 800};
         for(int i = 0; i < nombreArticulos.length; i++) {
             articulosSubasta.put(nombreArticulos[i], precioArticulos[i]);
@@ -61,7 +61,7 @@ public class ServidorSubastas {
         StringBuilder listaArticulos = new StringBuilder();
         listaArticulos.append("--- Lista de archivos en subasta ---\n");
         articulosSubasta.forEach((articulo, valor) -> {
-            listaArticulos.append("Artículo: ").append(articulo).append(", valor: ").append(valor).append("\n");
+            listaArticulos.append("Artículo -> ").append(articulo).append(", valor: ").append(valor).append("\n");
         });
         return listaArticulos.toString();
     }
@@ -85,14 +85,15 @@ public class ServidorSubastas {
                     case "ver" -> verInformacionArticulo(comandoPujadorTrozeado[1]);
                     case "pujar" -> pujarSobreArticulo(comandoPujadorTrozeado[1], comandoPujadorTrozeado[2]);
                     case "listar" -> listarArticulosSubasta();
-                    case "salir" -> "Hasta la vista!";
-                    default -> "Comando introudcido desconocido, introduce otro comando";
+                    case "salir" -> "¡Hasta la vista!";
+                    default -> "Comando introducido desconocido, introduce otro comando";
                 };
                 printWriter.println(respuesta);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        System.out.println("El cliente ha salido de la subasta");
     }
 
     // Puerto por el que el servidor escuchará peticiones
@@ -107,6 +108,7 @@ public class ServidorSubastas {
                 Socket socket = serverSocket.accept();
                 Thread thread = new Thread(() -> gestionarPujador(socket));
                 thread.start();
+                System.out.println("Cliente conectado: " + thread.getName());
             }
         } catch (IOException e) {
             System.err.println("Error en el servidor: " + e.getMessage());
