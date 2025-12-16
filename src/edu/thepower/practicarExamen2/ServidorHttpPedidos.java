@@ -97,7 +97,7 @@ public class ServidorHttpPedidos {
             try {
                 socket.close();
             } catch (IOException e) {
-                // Ignorar
+                System.err.println("Error: " + e.getMessage());
             }
         }
     }
