@@ -1,0 +1,24 @@
+Parte 1: El Cliente (ClienteProcesamiento.java)
+Debes crear un cliente que simule el envío de "imágenes" (cadenas de texto que representen nombres de archivos, por ejemplo: imagen1.jpg, foto_vacaciones.png).
+Configuración: El cliente debe conectarse a localhost por el puerto 4500.
+Bucle de envío: El cliente enviará 5 solicitudes consecutivas.
+Medición de Tiempo: Al igual que en tu ejemplo anterior, debes medir cuánto tarda el servidor en responder a cada solicitud (RTT - Round Trip Time).
+Timeout: Como UDP no es fiable, debes configurar un Timeout de 3000ms (3 segundos).
+Si el servidor no responde en 3 segundos, debes capturar la excepción, indicar "Paquete perdido o servidor ocupado" y continuar con la siguiente iteración.
+Output: Imprime por consola qué archivo envías y, cuando recibas la respuesta, qué te ha dicho el servidor y cuánto ha tardado.
+
+Parte 2: El Servidor Multihilo (ServidorConcurrente.java)
+El servidor actuará como un procesador de filtros para esas imágenes. Como "aplicar un filtro" es una tarea costosa en CPU, simularemos este tiempo.
+Escucha: El servidor debe escuchar en el puerto 4500 (UDP).
+Recepción: Debe estar en un bucle infinito esperando paquetes DatagramPacket.
+
+Concurrencia (La clave del ejercicio):
+El servidor NO debe procesar la lógica ni enviar la respuesta dentro del bucle while principal.
+En su lugar, cada vez que reciba un paquete, debe crear un nuevo Hilo (Thread) (o usar un ExecutorService, lo que prefieras) y pasarle el paquete recibido.
+El bucle principal debe volver inmediatamente al ds.receive() para estar listo para otro cliente.
+
+Lógica del Hilo (Worker):
+Extraer el mensaje (nombre del archivo).
+Simular procesamiento: El hilo debe dormir (Thread.sleep()) un tiempo aleatorio entre 1000ms y 2000ms.
+Preparar la respuesta: La respuesta debe ser el nombre del archivo convertido a MAYÚSCULAS + el texto " PROCESADO".
+Enviar el paquete de vuelta al cliente (usando la IP y puerto extraídos del paquete recibido).
